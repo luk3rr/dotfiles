@@ -61,7 +61,7 @@ def main():
                 log.write("{} copied to {}\n".format(f, geralda_dir))
 
         if width >= marilene_width and height >= marilene_height:
-            if ratio >= 2.3 and ratio <= 2.8:
+            if ratio >= 1.65 and ratio <= 1.85:
                copy2(f, marilene_dir)
                log.write("{} copied to {}\n".format(f, marilene_dir))
 
