@@ -23,7 +23,7 @@ def make_list(wallpapers_dir, list_path, screen_width, screen_height, screen_rat
     start_Time = time()
 
     try:
-        wallpaper_list = open(list_path + "/screen-list_" + str(screen_width) + "x" + str(screen_height) + ".txt", 'w+')
+        wallpaper_list = open(list_path + "/.wallpapers-list_" + str(screen_width) + "x" + str(screen_height) + ".txt", 'w+')
 
     except IOError:
         print(">> Could not read file")
@@ -45,12 +45,12 @@ def make_list(wallpapers_dir, list_path, screen_width, screen_height, screen_rat
 
 def select_wallpaper(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio):
     try:
-        wallpaper_list = open(list_path + "/screen-list_" + str(screen_width) + "x" + str(screen_height) + ".txt").read().splitlines()
+        wallpaper_list = open(list_path + "/.wallpapers-list_" + str(screen_width) + "x" + str(screen_height) + ".txt").read().splitlines()
 
     except IOError:
         print(">> List do not exists. Creating...\n")
         make_list(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio)
-        wallpaper_list = open(list_path + "/screen-list_" + str(screen_width) + "x" + str(screen_height) + ".txt").read().splitlines()
+        wallpaper_list = open(list_path + "/.wallpapers-list_" + str(screen_width) + "x" + str(screen_height) + ".txt").read().splitlines()
 
     line = choice(wallpaper_list)
     system("feh --bg-scale " + line)
