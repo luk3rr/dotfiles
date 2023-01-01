@@ -19,7 +19,7 @@ def main():
     start_Time = time()
 
     for i in files:
-        newName = i.replace(" ", "_").lower()
+        newName = i.replace(" ", "_")
         rn(i, newName)
 
     print("\n>> end script.\n>> duraction: {}".format(time() - start_Time))
