@@ -80,5 +80,4 @@ menu() {
     esac
 }
 
-rofi_command="rofi -dmenu $@ -p"
 menu
