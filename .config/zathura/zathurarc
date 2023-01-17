@@ -1,0 +1,54 @@
+# luk3rr's config
+# Colors inspired in dracula theme (https://github.com/dracula/dracula-theme)
+# ---------------------------------------------------------------------------
+
+map <C-i> recolor
+map <C-r> reload
+map <C-p> print
+map R rotate
+
+set pages-per-row 1
+
+set font "FiraCode 14"
+
+# zathurarc-dark
+set notification-error-bg       "#282a36" # base01  # seem not work
+set notification-error-fg       "#ff5555" # red
+set notification-warning-bg     "#282a36" # base01
+set notification-warning-fg     "#ff5555" # red
+set notification-bg             "#282a36" # base01
+set notification-fg             "#f1fa8c" # yellow
+
+set completion-group-bg         "#24252c" # base03
+set completion-group-fg         "#8be9fd" # base0
+set completion-bg               "#282a36" # base02
+set completion-fg               "#f8f8f2" # base1
+set completion-highlight-bg     "#44475a" # base01
+set completion-highlight-fg     "#f8f8f2" # base2
+
+# Define the color in index mode
+set index-bg                   "#282a36" # base02
+set index-fg                   "#f8f8f2" # base1
+set index-active-bg             "#282a36" # base01
+set index-active-fg             "#f8f8f2" # base2
+
+set inputbar-bg                 "#23252e" # base01
+set inputbar-fg                 "#f8f8f2" # base2
+
+set statusbar-bg                "#282a36" # base02
+set statusbar-fg                "#6472a1" # base1
+
+set highlight-color             "#bd93f9" # base00  # hightlight match when search keyword(vim's /)
+set highlight-active-color      "#ff79c6" # blue
+
+set default-bg                  "#282a36" # base02
+set default-fg                  "#f8f8f2" # base1
+set render-loading              true
+set render-loading-fg           "#282a36" # base02
+set render-loading-bg           "#282a36" # base02
+
+# Recolor book content's color
+set recolor                     true
+set recolor-lightcolor          "#282a36" # base02
+set recolor-darkcolor           "#f8f8f2"    # base1 -> text color
+set recolor-keephue             true      # keep original color
