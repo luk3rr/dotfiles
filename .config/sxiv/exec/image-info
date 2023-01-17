@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Called by sxiv(1) whenever an image gets loaded,
+# with the name of the image file as its first argument.
+# The output is displayed in sxiv's status bar.
+# Arguments:
+#   $1: path to image file
+#   $2: image width
+#   $3: image height
+
+s=" | " # field separator
+
+filename=$(basename "$1")
+filesize=$(du -Hh "$1" | cut -f 1)
+
+# The '[0]' stands for the first frame of a multi-frame file, e.g. gif.
+geometry=$(identify -format '%wx%h' "$1[0]")
+#iso=$(exiv2 $1 | sed -n -e 's/^ISO speed * //p' | sed -n -e 's/: //p')
+#exposure=$(exiv2 $1 | sed -n -e 's/^Exposure time * //p' | sed -n -e 's/: //p')
+#aperature=$(exiv2 $1 | sed -n -e 's/^Aperture * //p' | sed -n -e 's/: //p')
+
+#echo "${filesize}${s}${geometry}${s}${iso}${s}${exposure}${s}${aperature}${s}${filename}"
+echo "${filesize}${s}${geometry}${s}${filename}"
