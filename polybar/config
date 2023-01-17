@@ -26,8 +26,10 @@ foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
+underline = #0a6cf5
 
-[bar/top]
+[section/base]
+monitor = ${env:MONITOR}
 bottom            = false
 height            = 25
 offset-x          = 0
@@ -41,7 +43,7 @@ line-color = #f00
 
 border-color = #00000000
 
-padding-left = 1
+padding-left = 2
 padding-right = 2
 
 border-left-size = 0
@@ -51,15 +53,13 @@ module-margin-left = 2
 module-margin-right = 2
 
 font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
-font-3 = "Font Awesome 5 Free:style=Regular:pixelsize=10;1"
-font-4 = "Font Awesome 5 Free:style=Solid:pixelsize=10;1"
-font-5 = "Font Awesome 5 Brands:pixelsize=10;1"
+font-1 = FiraCode Nerd Font:style=Retina,Regular:pixelsize=13;2
 
-modules-left = xworkspaces player
-modules-center = date
-modules-right = pulseaudio filesystem xkeyboard memory cpu uptime temperature bluetooth wlan eth battery
+[bar/main]
+inherit = section/base
+modules-left = archicon xworkspaces player
+modules-center = pomodoro date
+modules-right = pulseaudio filesystem xkeyboard memory cpu temperature pacman pacman-update bluetooth wlan eth battery
 
 ;separator = |
 ;separator-foreground = ${colors.disabled}
@@ -78,18 +78,35 @@ cursor-scroll = ns-resize
 ; wm-restack = bspwm
 ; wm-restack = i3
 
-; override-redirect = true
+[bar/secondary]
+inherit = section/base
+modules-left = archicon xworkspaces player
+modules-center = pomodoro date
+modules-right = pulseaudio filesystem xkeyboard memory cpu pacman pacman-update temperature bluetooth wlan eth battery
+
+[module/pomodoro]
+type = custom/script
+exec = i3-gnome-pomodoro status
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground-alt}
+interval = 1; override-redirect = true
+format-underline = ${colors.underline}
+
+[module/archicon]
+type = custom/text
+content = 
+
 [module/xkeyboard]
 type = internal/xkeyboard
 blacklist-0 = num lock
-format-prefix = " "
+format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
 label-layout = %layout%
 label-indicator-padding = 2
 label-indicator-margin = 1
 label-indicator-background = ${colors.secondary}
 label-indicator-underline = ${colors.secondary}
-format-underline = #F0E68C
+format-underline = ${colors.underline}
 
 [module/i3]
 type = internal/i3
@@ -98,7 +115,7 @@ index-sort = true
 wrapping-scroll = false
 
 ; Only show workspaces on the same output as the bar
-;pin-workspaces = true
+pin-workspaces = true
 
 label-mode-padding = 2
 label-mode-foreground = #000
@@ -107,7 +124,7 @@ label-mode-background = ${colors.primary}
 ; focused = Active workspace on focused monitor
 label-focused = %index%
 label-focused-background = ${colors.background-alt}
-label-focused-underline= ${colors.primary}
+label-focused-underline= ${colors.underline}
 label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
@@ -128,21 +145,17 @@ label-urgent-padding = 2
 [module/battery]
 type = custom/script
 exec = ~/.config/polybar/battery_acpi.sh
-interval = 10
+interval = 5
 format = <label>
-format-prefix = ""
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #800000
-
+format-underline = ${colors.underline}
 
 [module/xworkspaces]
 type = internal/xworkspaces
-
 label-active = %name%
 label-active-background = ${colors.background-alt}
-label-active-underline= ${colors.primary}
+label-active-underline= ${colors.underline}
 label-active-padding = 1
-
+pin-workspaces = true
 label-occupied = %name%
 label-occupied-padding = 1
 
@@ -158,24 +171,45 @@ label-empty-padding = 1
 ;type = internal/xwindow
 ;label = %title:0:60:...%
 [module/filesystem]
-interval = 60
 type = custom/script
+interval = 60
 format =  <label>
-format-prefix = " "
+format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
 exec = ~/.config/polybar/drives.sh
-format-underline = #FFFFE0
+format-underline = ${colors.underline}
+
+[module/pacman]
+type = custom/script
+exec = pacman -Q | wc -l
+interval = 600
+format =  <label>
+format-prefix = "   "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = ${colors.underline}
+
+[module/pacman-update]
+type = custom/script
+exec = pacman -Qu | wc -l
+exec-if = "[ $(pacman -Qu | wc -l) -gt 0 ]"
+interval = 600
+format =  <label>
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = ${colors.underline}
 
 [module/pulseaudio]
 type = internal/pulseaudio
 format-volume = <label-volume> <bar-volume>
-label-volume = VOL %percentage%%
+format-prefix = "  "
+label-volume = %percentage%%
 label-volume-foreground = ${root.foreground}
+format-prefix-foreground = ${colors.foreground-alt}
 
-label-muted = "🔇 muted"
+label-muted = "  muted"
 label-muted-foreground = #666
 
-bar-volume-width = 10
+bar-volume-width = 5
 bar-volume-foreground-0 = #55aa55
 bar-volume-foreground-1 = #55aa55
 bar-volume-foreground-2 = #55aa55
@@ -195,57 +229,46 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
+format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #FFFF00
 label = %percentage_used%%
+format-underline = ${colors.underline}
 
 [module/player]
 interval = 1
 type = custom/script
 format = <label>
-format-prefix = " "
+format-prefix = "懶  "
 format-prefix-foreground = ${colors.foreground-alt}
 exec = ~/.config/polybar/player.sh
-format-underline = #00BFFF
+format-underline = ${colors.underline}
 
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
+format-prefix = "   "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #FFD700
 label = %percentage:2%%
+format-underline = ${colors.underline}
 
 [module/date]
 type = custom/script
 interval = 1
 format = <label>
-format-prefix = " "
+format-prefix = "   "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
-exec = ~/.config/polybar/calendar.sh
-
-;[network-base]
-;type = internal/network
-;interval = 5
-;format-connected = <label-connected>
-;format-disconnected = <label-disconnected>
-;label-disconnected = %{F#F0C674}%ifname%%{F#707880} disconnected
+exec = ~/.config/polybar/clock.sh
+format-underline = ${colors.underline}
 
 [module/eth]
 type = internal/network
 interface = enp0s31f6
 interval = 3.0
-format-connected-underline = #8B0000
-format-connected-prefix = " "
+format-connected-prefix = "  "
 format-connected-prefix-foreground = ${colors.foreground-alt}
 label-connected = %local_ip%
 format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+format-connected-underline = ${colors.underline}
 
 [module/bluetooth]
 type = custom/script
@@ -253,75 +276,56 @@ exec = "bluetoothctl devices | cut -d' ' -f2 | xargs -i -n1 bash -c "bluetoothct
 exec-if = "[ $(bluetoothctl show | grep 'Powered: yes' | wc -l) -gt 0 ]"
 interval = 5
 ;click-right = blueman-manager &
-format-prefix = " "
-format-underline = #A0522D
+format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
-;label-connected = %bluetooth%
-;format-disconnected = 
+format-underline = ${colors.underline}
 
 [module/wlan]
 type = internal/network
-;inherit = network-base
-;interface-type = wireless
 interface = wlp3s0
 interval = 3.0
-format-connected-underline = #A52A2A
-format-connected-prefix = " "
+format-connected-prefix = "   "
 format-connected-prefix-foreground = ${colors.foreground-alt}
 label-connected = %essid%
-format-disconnected = 
+format-disconnected =
+format-connected-underline = ${colors.underline}
 
 [module/ping]
 interval = 10
 type = custom/script
 format =  <label>
-format-prefix = " "
+format-prefix = "   "
 format-prefix-foreground = ${colors.foreground-alt}
 exec = ~/.config/polybar/ping.sh
-format-disconnected = "off" 
-format-underline = #FF4500
+format-disconnected = "off"
+format-underline = ${colors.underline}
 
 [module/uptime]
 interval = 60
 type = custom/script
 format = <label>
-format-prefix = "  "
+format-prefix = "祥  "
 format-prefix-foreground = ${colors.foreground-alt}
 exec = ~/.config/polybar/uptime.sh
-format-underline = #CD853F
+format-underline = ${colors.underline}
 
 [module/entropy]
 interval = 10
 type = custom/script
 format = <label>
-format-prefix = " "
+format-prefix = "   "
 format-prefix-foreground = ${colors.foreground-alt}
 exec = ~/.config/polybar/entropy.sh
-format-underline = #FF8C00
+format-underline = ${colors.underline}
 
 [module/temperature]
 interval = 3
 type = custom/script
 format = <label>
-format-prefix = " "
+format-prefix = "   "
 format-prefix-foreground = ${colors.foreground-alt}
 exec = ~/.config/polybar/cputemp.sh
-format-underline = #D2691E
-
-;[module/eth]
-;inherit = network-base
-;interface-type = wired
-;label-connected = %{F#F0C674}%ifname%%{F-} %local_ip%
-
-;[module/date]
-;type = internal/date
-;interval = 1
-
-;date = %H:%M
-;date-alt = %Y-%m-%d %H:%M:%S
-
-;label = %date%
-;label-foreground = ${colors.primary}
+format-underline = ${colors.underline}
 
 [settings]
 screenchange-reload = true
