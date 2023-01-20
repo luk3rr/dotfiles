@@ -6,7 +6,7 @@
 
 # --------------------------------------------------------------------------------------------
 
-from pathlib import Path
+#from pathlib import Path
 from sys import argv, exit
 from os import getenv, system
 from random import choice
@@ -64,7 +64,8 @@ def main():
         print(">> Environment variable do not exist")
         exit()
 
-    list_path = str(Path(wallpapers_dir).parents[0])
+    #list_path = str(Path(wallpapers_dir).parents[0])
+    list_path = wallpapers_dir
 
     screen_width = int(argv[2].split("x")[0])
     screen_height = int(argv[2].split("x")[1])
