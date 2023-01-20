@@ -1,0 +1,13 @@
+# module to check if exists packages to update every 2h
+# required for polybar's 'pacman-update' to work
+# copy this file to /etc/systemmd/system/
+# and run systemctl enable pacmansy.service
+
+[Unit]
+Description=Pacman sync timer
+
+[Service]
+ExecStart=pacman -Sy
+
+[Install]
+WantedBy=default.target

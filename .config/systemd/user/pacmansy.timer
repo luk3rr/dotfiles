@@ -1,0 +1,12 @@
+# copy this file to /etc/systemmd/system/
+# and run systemctl enable pacmansy.timer
+
+[Unit]
+Description=pacman sync timer
+
+[Timer]
+OnBootSec=5s
+OnUnitActiveSec=2h
+
+[Install]
+WantedBy=timers.target

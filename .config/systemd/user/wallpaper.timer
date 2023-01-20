@@ -1,0 +1,11 @@
+# module to change wallpaper every 15min
+
+[Unit]
+Description=Wallpaper timer
+
+[Timer]
+OnBootSec=5s
+OnUnitActiveSec=15m
+
+[Install]
+WantedBy=timers.target
