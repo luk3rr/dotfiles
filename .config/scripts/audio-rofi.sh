@@ -29,7 +29,7 @@ menu() {
     get_sinks
 
     #-format 'i' to return index
-    chosen=$(echo -e "$sinksNames" | rofi -dmenu -format 'i' -p "SINK: " -lines "$lineNum")
+    chosen=$(echo -e "$sinksNames" | rofi -dmenu -format 'i' -p "SINK" -lines "$lineNum")
 
     if [[ "$chosen" == "" ]]; then
         return 0
