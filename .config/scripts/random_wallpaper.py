@@ -1,10 +1,24 @@
 #!/usr/bin/env python3
 
-''' this script makes a list or sets wallpapers by size 
-    e.g. -> ./random_wallpaper.py --select_wallpaper 1920x1080
+'''
+██████╗ ██╗    ██╗ █████╗ ██╗     ██╗
+██╔══██╗██║    ██║██╔══██╗██║     ██║
+██████╔╝██║ █╗ ██║███████║██║     ██║
+██╔══██╗██║███╗██║██╔══██║██║     ██║
+██║  ██║╚███╔███╔╝██║  ██║███████╗███████╗
+╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝  ╚═╝╚══════╝╚══════╝
+
+AUTHOR: luk3rr
+GITHUB: @luk3rr
+
+this script makes a list and sets wallpapers by size.
+e.g. -> ./random_wallpaper.py --select_wallpaper 1920x1080
+make sure you have an environment variable 'wallpapers_dir' with the path of the wallpapers
+
+Depends on: feh, python Pillow
 '''
 
-# --------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------------
 
 #from pathlib import Path
 from sys import argv, exit

@@ -1,9 +1,26 @@
 #!/usr/bin/env python3
 
-''' rename files with md5 hash '''
+'''
+ ▄         ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄         ▄       ▄▄▄▄▄▄▄▄▄▄▄  ▄         ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄
+▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌       ▐░▌     ▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌
+▐░▌       ▐░▌▐░█▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀▀▀ ▐░▌       ▐░▌      ▀▀▀▀█░█▀▀▀▀ ▐░▌       ▐░▌ ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀
+▐░▌       ▐░▌▐░▌       ▐░▌▐░▌          ▐░▌       ▐░▌          ▐░▌     ▐░▌       ▐░▌     ▐░▌     ▐░▌
+▐░█▄▄▄▄▄▄▄█░▌▐░█▄▄▄▄▄▄▄█░▌▐░█▄▄▄▄▄▄▄▄▄ ▐░█▄▄▄▄▄▄▄█░▌          ▐░▌     ▐░█▄▄▄▄▄▄▄█░▌     ▐░▌     ▐░█▄▄▄▄▄▄▄▄▄
+▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌          ▐░▌     ▐░░░░░░░░░░░▌     ▐░▌     ▐░░░░░░░░░░░▌
+▐░█▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀█░▌ ▀▀▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀█░▌          ▐░▌     ▐░█▀▀▀▀▀▀▀█░▌     ▐░▌      ▀▀▀▀▀▀▀▀▀█░▌
+▐░▌       ▐░▌▐░▌       ▐░▌          ▐░▌▐░▌       ▐░▌          ▐░▌     ▐░▌       ▐░▌     ▐░▌               ▐░▌
+▐░▌       ▐░▌▐░▌       ▐░▌ ▄▄▄▄▄▄▄▄▄█░▌▐░▌       ▐░▌          ▐░▌     ▐░▌       ▐░▌ ▄▄▄▄█░█▄▄▄▄  ▄▄▄▄▄▄▄▄▄█░▌
+▐░▌       ▐░▌▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░▌       ▐░▌          ▐░▌     ▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌
+ ▀         ▀  ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀            ▀       ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀
 
-''' you must pass the directory where the files to be renamed are located. This script is recursive,
-    that is, it will perfom the operation on all subdiretories '''
+AUTHOR: luk3rr
+GITHUB: @luk3rr
+
+A script that rename files with md5 hash. You must pass the directory where the files to be renamed are located.
+This script is recursive, that is, it will perfom the operation on all subdiretories
+
+Depends on: hashlib, PyExifTool
+'''
 
 # --------------------------------------------------------------------------------------------------
 
@@ -27,7 +44,7 @@ def main():
         dirt += "/"
 
     files = [f for f in glob(dirt + "**/*", recursive=True)]
-    print(">> {} files located.".format(len(files)), end=" ")
+    print(">> {} files found.".format(len(files)), end=" ")
     print("\n>> Loading...", end=" ")
     start_Time = time()
 
@@ -44,7 +61,7 @@ def main():
         ext = i.rsplit('.')[-1]
         rename(i, path.dirname(meta[1]) + "/" + meta[0] + "-" + hashed[:15] + "." + ext)
 
-    print("\n>> end script.\n>> duraction: {}".format(time() - start_Time))
+    print("\n>> end script.\n>> Elapsed time: {}".format(time() - start_Time))
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,22 @@
 #!/usr/bin/env sh
 
+# ██     ██ ██ ███████ ██     ██████   ██████  ███████ ██
+# ██     ██ ██ ██      ██     ██   ██ ██    ██ ██      ██
+# ██  █  ██ ██ █████   ██     ██████  ██    ██ █████   ██
+# ██ ███ ██ ██ ██      ██     ██   ██ ██    ██ ██      ██
+#  ███ ███  ██ ██      ██     ██   ██  ██████  ██      ██
+#
+# AUTHOR: luk3rr
+# GITHUB: @luk3rr
+#
+# This script generates a rofi menu that lists all available networks and allows connect it
+#
+# Inspired by rofi-bluetooth (https://github.com/nickclyde/rofi-bluetooth)
+#
+# Depends on: rofi, nmcli
+#
+# ----------------------------------------------------------------------------------------------------------------------
+
 # table header
 fields=IN-USE,SSID,BARS,SECURITY,BSSID
 
