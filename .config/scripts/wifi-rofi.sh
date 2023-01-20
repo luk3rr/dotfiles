@@ -61,10 +61,10 @@ menu() {
     if wifi_on; then
         status="Wifi: on"
         wifi_list
-        chosen=$(echo -e "$status\nExit\n$availableNetworks" | uniq -u | rofi -dmenu -p "Wi-Fi SSID: " -lines "$lineNum" -width -"$widthColumn")
+        chosen=$(echo -e "$status\nExit\n$availableNetworks" | uniq -u | rofi -dmenu -p "Wi-Fi SSID" -lines "$lineNum" -width -"$widthColumn")
     else
         status="Wifi: off"
-        chosen=$(echo -e "$status\nExit" | uniq -u | rofi -dmenu -p "Wi-Fi SSID: ")
+        chosen=$(echo -e "$status\nExit" | uniq -u | rofi -dmenu -p "Wi-Fi SSID")
     fi
     # Open rofi menu, read chosen option
     # Match chosen option to command
