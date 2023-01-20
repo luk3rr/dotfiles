@@ -57,7 +57,7 @@ font-1 = FiraCode Nerd Font:style=Retina,Regular:pixelsize=13;2
 
 [bar/main]
 inherit = section/base
-modules-left = archicon xworkspaces player
+modules-left = archicon i3 player
 modules-center = pomodoro date
 modules-right = pulseaudio filesystem xkeyboard memory cpu temperature pacman pacman-update bluetooth wlan eth battery
 
@@ -192,7 +192,7 @@ format-underline = ${colors.underline}
 type = custom/script
 exec = pacman -Qu | wc -l
 exec-if = "[ $(pacman -Qu | wc -l) -gt 0 ]"
-interval = 600
+interval = 7200
 format =  <label>
 format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
@@ -200,13 +200,13 @@ format-underline = ${colors.underline}
 
 [module/pulseaudio]
 type = internal/pulseaudio
-format-volume = <label-volume> <bar-volume>
-format-prefix = "  "
-label-volume = %percentage%%
-label-volume-foreground = ${root.foreground}
+format-volume = <format-prefix> <label-volume> <bar-volume>
+format-prefix = "A"
+label-volume =    %percentage%%
+label-volume-foreground = ${colors.foreground-alt}
 format-prefix-foreground = ${colors.foreground-alt}
 
-label-muted = "  muted"
+label-muted = "   muted"
 label-muted-foreground = #666
 
 bar-volume-width = 5

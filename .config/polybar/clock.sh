@@ -1,5 +1,5 @@
 #!/bin/env sh
 
-time="$(date '+%b %d, %R %p')"
+time="$(date '+%a, %b %d, %I:%M %p')"
 
 printf "$time"
