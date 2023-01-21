@@ -155,7 +155,7 @@ interval = 1
 format = <label>
 format-prefix = "   "
 format-prefix-foreground = ${colors.foreground-alt}
-exec = ~/.config/polybar/clock.sh
+exec = date '+%a, %b %d, %I:%M %p'
 format-underline = ${colors.underline}
 
 
@@ -235,7 +235,7 @@ type = custom/script
 format = <label>
 format-prefix = "   "
 format-prefix-foreground = ${colors.foreground-alt}
-exec = ~/.config/polybar/cputemp.sh
+exec = sensors | grep -i CPU | head -n1 | sed -r 's/.*:\s+[\+-]?(.*C)\s+.*/\1/'
 format-underline = ${colors.underline}
 
 
@@ -341,7 +341,7 @@ format-underline = ${colors.underline}
 ;;format = <label>
 ;;format-prefix = "祥  "
 ;;format-prefix-foreground = ${colors.foreground-alt}
-;;exec = ~/.config/polybar/uptime.sh
+;;exec = uptime | cut -d " " -f 4-5 | tr -d ","
 ;;format-underline = ${colors.underline}
 ;;
 ;;[module/entropy]
