@@ -57,6 +57,10 @@ def make_list(wallpapers_dir, list_path, screen_width, screen_height, screen_rat
                 wallpaper_list.write(f + '\n')
 
     wallpaper_list.close()
+
+    with open(list_path + "/.wallpaper-list_" + str(screen_width) + "x" + str(screen_height) + ".txt", 'r') as wallpaper_list:
+        print("\n>> {} wallpapers candidates found.".format(len(wallpaper_list.readlines())))
+
     print("\n>> End function.\n>> Elapsed time: {}".format(time() - start_time))
 
 def select_wallpaper(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio):
