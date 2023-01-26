@@ -76,12 +76,12 @@ def usage():
     print("USAGE: python3 random_wallpaper <ARG> <SIZE>\n")
     print("<SIZE>:")
     print("\t<WIDTH>x<HEIGHT>")
-    print("\tExample: 1920x1080\n")
+    print("\tExamples: 1920x1080, 21x9, 16x9\n")
     print("<ARGS>:")
     print("-m, --make_list")
-    print("\tMakes a list with all wallpapers with <SIZE>\n")
+    print("\tMakes a list with all wallpapers with size <SIZE>\n")
     print("-s, --select_wallpaper")
-    print("\tSelect a wallpaper with <SIZE>. Makes a list if it does not exist.")
+    print("\tSelect a wallpaper with size <SIZE>. Makes a list if it does not exist.")
 
 def main():
     wallpapers_dir = getenv('WALLPAPERS_DIR')
@@ -92,18 +92,27 @@ def main():
     #list_path = str(Path(wallpapers_dir).parents[0])
     list_path = wallpapers_dir
 
-    screen_width = int(argv[2].split("x")[0])
-    screen_height = int(argv[2].split("x")[1])
-    screen_ratio = screen_width/screen_height
+    try:
+        screen_width = int(argv[2].split("x")[0])
+        screen_height = int(argv[2].split("x")[1])
 
-    if (argv[1] == "--make_list" or argv[1] == "-m"):
-        make_list(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio)
+        if (screen_height == 0 or screen_width == 0): raise ZeroDivisionError
+        screen_ratio = screen_width/screen_height
 
-    elif (argv[1] == "--select_wallpaper" or argv[1] == "-s"):
-        select_wallpaper(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio)
+        if (argv[1] == "--make_list" or argv[1] == "-m"):
+            make_list(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio)
 
-    else:
+        elif (argv[1] == "--select_wallpaper" or argv[1] == "-s"):
+            select_wallpaper(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio)
+
+        else:
+            usage()
+
+    except (IndexError, ValueError):
         usage()
+
+    except ZeroDivisionError:
+        print(">> width or height cannot be zero")
 
 if __name__ == "__main__":
     main()
