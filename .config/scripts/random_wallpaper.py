@@ -72,6 +72,17 @@ def select_wallpaper(wallpapers_dir, list_path, screen_width, screen_height, scr
     system("feh --bg-fill " + line)
     print(">> New background: " + line)
 
+def usage():
+    print("USAGE: python3 random_wallpaper <ARG> <SIZE>\n")
+    print("<SIZE>:")
+    print("\t<WIDTH>x<HEIGHT>")
+    print("\tExample: 1920x1080\n")
+    print("<ARGS>:")
+    print("-m, --make_list")
+    print("\tMakes a list with all wallpapers with <SIZE>\n")
+    print("-s, --select_wallpaper")
+    print("\tSelect a wallpaper with <SIZE>. Makes a list if it does not exist.")
+
 def main():
     wallpapers_dir = getenv('WALLPAPERS_DIR')
     if (wallpapers_dir == None):
@@ -90,6 +101,9 @@ def main():
 
     elif (argv[1] == "--select_wallpaper" or argv[1] == "-s"):
         select_wallpaper(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio)
+
+    else:
+        usage()
 
 if __name__ == "__main__":
     main()
