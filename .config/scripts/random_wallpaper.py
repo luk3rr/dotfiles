@@ -85,10 +85,10 @@ def main():
     screen_height = int(argv[2].split("x")[1])
     screen_ratio = screen_width/screen_height
 
-    if (argv[1] == "--make_list"):
+    if (argv[1] == "--make_list" or argv[1] == "-m"):
         make_list(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio)
 
-    elif (argv[1] == "--select_wallpaper"):
+    elif (argv[1] == "--select_wallpaper" or argv[1] == "-s"):
         select_wallpaper(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio)
 
 if __name__ == "__main__":
