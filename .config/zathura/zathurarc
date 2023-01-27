@@ -29,7 +29,7 @@ set completion-highlight-fg     "#f8f8f2" # base2
 # Define the color in index mode
 set index-bg                   "#282a36" # base02
 set index-fg                   "#f8f8f2" # base1
-set index-active-bg             "#282a36" # base01
+set index-active-bg             "#44475a" # base01
 set index-active-fg             "#f8f8f2" # base2
 
 set inputbar-bg                 "#23252e" # base01
