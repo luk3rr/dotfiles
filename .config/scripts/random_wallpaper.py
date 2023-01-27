@@ -28,7 +28,7 @@ from PIL import Image
 from glob import glob as scan
 from time import time
 
-def make_list(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio, ratio_tolerance):
+def make_list(wallpapers_dir, list_path, list_name, screen_width, screen_height, screen_ratio, ratio_tolerance):
     files = [f for f in scan(wallpapers_dir + "**/*.*", recursive=True)]
 
     print(">> {} files found.".format(len(files)), end=" ")
@@ -37,7 +37,7 @@ def make_list(wallpapers_dir, list_path, screen_width, screen_height, screen_rat
     start_time = time()
 
     try:
-        wallpaper_list = open(list_path + "/.wallpaper-list_" + str(screen_width) + "x" + str(screen_height) + "_RT-" + str(ratio_tolerance*100).split('.')[0] + "pct.txt", 'w+')
+        wallpaper_list = open(list_path + "/" + list_name, 'w+')
 
     except IOError:
         print(">> Could not read file")
@@ -56,19 +56,19 @@ def make_list(wallpapers_dir, list_path, screen_width, screen_height, screen_rat
 
     wallpaper_list.close()
 
-    with open(list_path + "/.wallpaper-list_" + str(screen_width) + "x" + str(screen_height) + "_RT-" + str(ratio_tolerance*100).split('.')[0] +  "pct.txt", 'r') as wallpaper_list:
+    with open(list_path + "/" + list_name, 'r') as wallpaper_list:
         print("\n>> {} wallpapers candidates found.".format(len(wallpaper_list.readlines())))
 
     print("\n>> End function.\n>> Elapsed time: {}".format(time() - start_time))
 
-def select_wallpaper(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio, ratio_tolerance):
+def select_wallpaper(wallpapers_dir, list_path, list_name, screen_width, screen_height, screen_ratio, ratio_tolerance):
     try:
-        wallpaper_list = open(list_path + "/.wallpaper-list_" + str(screen_width) + "x" + str(screen_height) + "_RT-" + str(ratio_tolerance*100).split('.')[0] + "pct.txt").read().splitlines()
+        wallpaper_list = open(list_path + "/" + list_name).read().splitlines()
 
     except IOError:
         print(">> List do not exists. Creating...\n")
-        make_list(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio, ratio_tolerance)
-        wallpaper_list = open(list_path + "/.wallpaper-list_" + str(screen_width) + "x" + str(screen_height) + "_RT-" + str(ratio_tolerance*100).split('.')[0] + "pct.txt").read().splitlines()
+        make_list(wallpapers_dir, list_path, list_name, screen_width, screen_height, screen_ratio, ratio_tolerance)
+        wallpaper_list = open(list_path + "/" + list_name).read().splitlines()
 
     line = choice(wallpaper_list)
     system("feh --bg-fill " + line)
@@ -98,10 +98,6 @@ def main():
     if (wallpapers_dir == None):
         print(">> Environment variable do not exist")
         exit()
-
-    #list_path = str(Path(wallpapers_dir).parents[0])
-    list_path = wallpapers_dir
-
     try:
         screen_width = int(argv[2].split("x")[0])
         screen_height = int(argv[2].split("x")[1])
@@ -115,11 +111,16 @@ def main():
                 if ratio_tolerance > 1 or ratio_tolerance < 0:
                     raise ValueError("Ratio tolerance out of range")
 
+
+        #list_path = str(Path(wallpapers_dir).parents[0])
+        list_path = wallpapers_dir
+        list_name = ".wallpaper-list_" + str(screen_width) + "x" + str(screen_height) + "_RT-" + str(ratio_tolerance*100).split('.')[0] + "pct.txt"
+
         if (argv[1] == "--make_list" or argv[1] == "-m"):
-            make_list(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio, ratio_tolerance)
+            make_list(wallpapers_dir, list_path, list_name, screen_width, screen_height, screen_ratio, ratio_tolerance)
 
         elif (argv[1] == "--select_wallpaper" or argv[1] == "-s"):
-            select_wallpaper(wallpapers_dir, list_path, screen_width, screen_height, screen_ratio, ratio_tolerance)
+            select_wallpaper(wallpapers_dir, list_path, list_name, screen_width, screen_height, screen_ratio, ratio_tolerance)
 
         else:
             usage()
