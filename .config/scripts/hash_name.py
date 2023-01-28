@@ -36,6 +36,7 @@ from glob import glob
 from os import rename, path
 from time import time
 import exiftool
+from exiftool.exceptions import ExifToolExecuteError, ExifToolOutputEmptyError
 
 def get_date_taken(path):
     with exiftool.ExifToolHelper() as at:
@@ -58,8 +59,13 @@ def main():
     start_time = time()
 
     for i in files:
-        meta = get_date_taken(i)
-        get_date_taken(i)
+
+        try:
+            meta = get_date_taken(i)
+            get_date_taken(i)
+
+        except (ExifToolOutputEmptyError, ExifToolExecuteError):
+            continue
 
         try:
             with open(i, 'rb') as fil:
