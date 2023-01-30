@@ -11,7 +11,7 @@
 ▐░▌       ▐░▌▐░▌       ▐░▌          ▐░▌▐░▌       ▐░▌          ▐░▌     ▐░▌       ▐░▌     ▐░▌               ▐░▌
 ▐░▌       ▐░▌▐░▌       ▐░▌ ▄▄▄▄▄▄▄▄▄█░▌▐░▌       ▐░▌          ▐░▌     ▐░▌       ▐░▌ ▄▄▄▄█░█▄▄▄▄  ▄▄▄▄▄▄▄▄▄█░▌
 ▐░▌       ▐░▌▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░▌       ▐░▌          ▐░▌     ▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌
- ▀         ▀  ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀            ▀       ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀
+ ▀         ▀  ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀            ▀       ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀
 
 AUTHOR: luk3rr
 GITHUB: @luk3rr
@@ -21,7 +21,7 @@ This script is recursive, that is, it will perfom the operation on all subdireto
 
 DISCLAIMER: This script checks if there collision by the name file.
             If you have already run it on a folder and run it again, it will find that all files are collisions,
-            that is, put the tag 'COLLISION=n' at the end of the name. If that happens, run it one more time to
+            that is, put the tag 'COLLISION=n' at the end of the filename. If that happens, run it one more time to
             get everything back to normal.
 
 Depends on: hashlib, PyExifTool
@@ -38,61 +38,60 @@ from time import time
 import exiftool
 from exiftool.exceptions import ExifToolExecuteError, ExifToolOutputEmptyError
 
-def get_date_taken(path):
+def get_file_data(path):
     with exiftool.ExifToolHelper() as at:
         item = at.get_tags(path, tags=["Directory", "FileModifyDate"])
         source = item[0]["SourceFile"]
-        dat = item[0]["File:FileModifyDate"]
-        dat = dat.replace(":", "")
-        return dat.split(' ')[0], source
+        date = item[0]["File:FileModifyDate"]
+        date = date.replace(":", "")
+        return date.split(' ')[0], source
 
 def main():
     countCollisionItems = 0
-    dirt = str(input(">> PATH: "))
+    pathWork = str(input(">> PATH: "))
 
-    if dirt[-1] != "/":
-        dirt += "/"
+    if pathWork[-1] != "/":
+        pathWork += "/"
 
-    files = [f for f in glob(dirt + "**/*", recursive=True)]
+    files = [f for f in glob(pathWork + "**/*", recursive=True)]
     print(">> {} files found.".format(len(files)), end="\n")
     print("\n>> Loading...", end="\n")
-    start_time = time()
+    startTime = time()
 
-    for i in files:
-
+    for currentItem in files:
         try:
-            meta = get_date_taken(i)
-            get_date_taken(i)
+            meta = get_file_data(currentItem)
+            get_file_data(currentItem)
 
         except (ExifToolOutputEmptyError, ExifToolExecuteError):
             continue
 
         try:
-            with open(i, 'rb') as fil:
+            with open(currentItem, 'rb') as fil:
                 hashed = md5(fil.read()).hexdigest()
 
         except IsADirectoryError:
             continue
 
-        ext = i.rsplit('.')[-1]
-        newName = path.dirname(meta[1]) + "/" + meta[0] + "-" + hashed[:15] + "." + ext
+        fileExtension = currentItem.rsplit('.')[-1]
+        newName = path.dirname(meta[1]) + "/" + meta[0] + "-" + hashed[:15] + "." + fileExtension
 
         # check collision
         if exists(newName):
-            duplicateFile = path.dirname(meta[1]) + "/" + meta[0] + "-" + hashed[:15] + "-COLLISION=" + str(countCollisionItems) + "." + ext
-            rename(i, duplicateFile)
+            duplicateFile = path.dirname(meta[1]) + "/" + meta[0] + "-" + hashed[:15] + "-COLLISION=" + str(countCollisionItems) + "." + fileExtension
+            rename(currentItem, duplicateFile)
             countCollisionItems += 1
 
             print("\n>> Collision detected")
             print("\tITEM:     ", newName)
-            print("\tCOLLIDER: ", i, end="\n\n")
+            print("\tCOLLIDER: ", currentItem, end="\n\n")
 
         else:
-            rename(i, newName)
-            print("- ITEM:     ", i)
+            rename(currentItem, newName)
+            print("- ITEM:     ", currentItem)
             print("  NEW NAME: ", newName, end="\n\n")
 
-    print("\n>> End script.\n>> Possible duplicate files: {}\n>> Elapsed time: {} s".format(countCollisionItems, round(time() - start_time, 2)))
+    print("\n>> End script.\n>> Possible duplicate files: {}\n>> Elapsed time: {} s".format(countCollisionItems, round(time() - startTime, 2)))
 
 if __name__ == "__main__":
     main()

@@ -13,7 +13,7 @@ GITHUB: @luk3rr
 
 this script makes a list and sets wallpapers by size.
 e.g. -> ./random_wallpaper.py --select_wallpaper 1920x1080
-make sure you have an environment variable 'wallpapers_dir' with the path of the wallpapers
+make sure you have an environment variable 'wallpapersDir' with the path of the wallpapers
 
 Depends on: feh, python Pillow
 '''
@@ -28,51 +28,51 @@ from PIL import Image
 from glob import glob as scan
 from time import time
 
-def make_list(wallpapers_dir, list_path, list_name, screen_width, screen_height, screen_ratio, ratio_tolerance):
-    files = [f for f in scan(wallpapers_dir + "**/*.*", recursive=True)]
+def make_list(wallpapersDir, listPath, listName, screenWidth, screenHeight, screenRatio, ratioTolerance):
+    files = [f for f in scan(wallpapersDir + "**/*.*", recursive=True)]
 
     print(">> {} files found.".format(len(files)), end=" ")
     print("\n>> Loading...", end=" ")
 
-    start_time = time()
+    startTime = time()
 
     try:
-        wallpaper_list = open(list_path + "/" + list_name, 'w+')
+        wallpaperList = open(listPath + "/" + listName, 'w+')
 
     except IOError:
         print(">> Could not read file")
         exit()
 
-    print("\n>> List created in {}".format(list_path))
+    print("\n>> List created in {}".format(listPath))
 
-    for f in files:
-        photo = Image.open(f)
+    for currentItem in files:
+        photo = Image.open(currentItem)
         width, height = photo.size
         ratio = width/height
 
-        if width >= screen_width and height >= screen_height:
-            if ratio >= screen_ratio - ratio_tolerance:
-                wallpaper_list.write(f + '\n')
+        if width >= screenWidth and height >= screenHeight:
+            if ratio >= screenRatio - ratioTolerance:
+                wallpaperList.write(currentItem + '\n')
 
-    wallpaper_list.close()
+    wallpaperList.close()
 
-    with open(list_path + "/" + list_name, 'r') as wallpaper_list:
-        print("\n>> {} wallpapers candidates found.".format(len(wallpaper_list.readlines())))
+    with open(listPath + "/" + listName, 'r') as wallpaperList:
+        print("\n>> {} wallpapers candidates found.".format(len(wallpaperList.readlines())))
 
-    print("\n>> End function.\n>> Elapsed time: {}".format(time() - start_time))
+    print("\n>> End function.\n>> Elapsed time: {}".format(time() - startTime))
 
-def select_wallpaper(wallpapers_dir, list_path, list_name, screen_width, screen_height, screen_ratio, ratio_tolerance):
+def select_wallpaper(wallpapersDir, listPath, listName, screenWidth, screenHeight, screenRatio, ratioTolerance):
     try:
-        wallpaper_list = open(list_path + "/" + list_name).read().splitlines()
+        wallpaperList = open(listPath + "/" + listName).read().splitlines()
 
     except IOError:
         print(">> List do not exists. Creating...\n")
-        make_list(wallpapers_dir, list_path, list_name, screen_width, screen_height, screen_ratio, ratio_tolerance)
-        wallpaper_list = open(list_path + "/" + list_name).read().splitlines()
+        make_list(wallpapersDir, listPath, listName, screenWidth, screenHeight, screenRatio, ratioTolerance)
+        wallpaperList = open(listPath + "/" + listName).read().splitlines()
 
-    line = choice(wallpaper_list)
-    system("feh --bg-fill " + line)
-    print(">> New background: " + line)
+    newWallpaper = choice(wallpaperList)
+    system("feh --bg-fill " + newWallpaper)
+    print(">> New wallpaper: " + newWallpaper)
 
 def usage():
     print("USAGE: python3 random_wallpaper <ARG> <SIZE> [optional <FLOAT_RATIO_TOLERANCE>]\n")
@@ -93,47 +93,47 @@ def usage():
     print("\tSelect a wallpaper with size <SIZE>. Makes a list if it does not exist.")
 
 def main():
-    ratio_tolerance = 0
-    wallpapers_dir = getenv('WALLPAPERS_DIR')
-    if (wallpapers_dir == None):
+    ratioTolerance = 0
+    wallpapersDir = getenv('WALLPAPERS_DIR')
+    if (wallpapersDir == None):
         print(">> Environment variable do not exist")
         exit()
     try:
-        screen_width = int(argv[2].split("x")[0])
-        screen_height = int(argv[2].split("x")[1])
-        if (screen_height == 0 or screen_width == 0): raise ZeroDivisionError
-        screen_ratio = screen_width/screen_height
+        screenWidth = int(argv[2].split("x")[0])
+        screenHeight = int(argv[2].split("x")[1])
+        if (screenHeight == 0 or screenWidth == 0): raise ZeroDivisionError("Width or height cannot be zero")
+        screenRatio = screenWidth/screenHeight
 
         if (len(argv) >= 4):
             if (argv[3] != ''):
-                ratio_tolerance = float(argv[3])
+                ratioTolerance = float(argv[3])
 
-                if ratio_tolerance > 1 or ratio_tolerance < 0:
+                if ratioTolerance > 1 or ratioTolerance < 0:
                     raise ValueError("Ratio tolerance out of range")
 
 
-        #list_path = str(Path(wallpapers_dir).parents[0])
-        list_path = wallpapers_dir
-        list_name = ".wallpaper-list_" + str(screen_width) + "x" + str(screen_height) + "_RT-" + str(ratio_tolerance*100).split('.')[0] + "pct.txt"
+        #listPath = str(Path(wallpapersDir).parents[0])
+        listPath = wallpapersDir
+        listName = ".wallpaper-list_" + str(screenWidth) + "x" + str(screenHeight) + "_RT-" + str(ratioTolerance*100).split('.')[0] + "pct.txt"
 
         if (argv[1] == "--make_list" or argv[1] == "-m"):
-            make_list(wallpapers_dir, list_path, list_name, screen_width, screen_height, screen_ratio, ratio_tolerance)
+            make_list(wallpapersDir, listPath, listName, screenWidth, screenHeight, screenRatio, ratioTolerance)
 
         elif (argv[1] == "--select_wallpaper" or argv[1] == "-s"):
-            select_wallpaper(wallpapers_dir, list_path, list_name, screen_width, screen_height, screen_ratio, ratio_tolerance)
+            select_wallpaper(wallpapersDir, listPath, listName, screenWidth, screenHeight, screenRatio, ratioTolerance)
 
         else:
             usage()
 
-    except ValueError as err:
-        print("ERROR:", err, '\n')
+    except ValueError as errorMsg:
+        print("ERROR:", errorMsg, '\n')
         usage()
 
     except IndexError:
         usage()
 
-    except ZeroDivisionError:
-        print("ERROR: width or height cannot be zero")
+    except ZeroDivisionError as errorMsg:
+        print("ERROR:", errorMsg, '\n')
 
 if __name__ == "__main__":
     main()
