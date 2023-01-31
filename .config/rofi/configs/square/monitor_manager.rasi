@@ -63,7 +63,7 @@ inputbar {
 }
 
 listview {
-    columns:						2;
+    columns:						3;
     lines:							1;
     spacing:                        12px;
     cycle:                          true;
