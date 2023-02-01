@@ -31,15 +31,14 @@ Depends on: hashlib, PyExifTool
 
 from hashlib import md5
 from os.path import exists
-from os import rename
 from glob import glob
 from os import rename, path
 from time import time
-import exiftool
+from exiftool import ExifToolHelper
 from exiftool.exceptions import ExifToolExecuteError, ExifToolOutputEmptyError
 
 def get_file_data(path):
-    with exiftool.ExifToolHelper() as at:
+    with ExifToolHelper() as at:
         item = at.get_tags(path, tags=["Directory", "FileModifyDate"])
         source = item[0]["SourceFile"]
         date = item[0]["File:FileModifyDate"]
