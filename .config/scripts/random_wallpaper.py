@@ -51,7 +51,7 @@ def make_list(wallpapersDir, listPath, listName, screenWidth, screenHeight, scre
         ratio = width/height
 
         if width >= screenWidth and height >= screenHeight:
-            if ratio >= screenRatio - ratioTolerance:
+            if ratio >= (screenRatio - screenRatio*ratioTolerance) and ratio <= (screenRatio + screenRatio*ratioTolerance):
                 wallpaperList.write(currentItem + '\n')
 
     wallpaperList.close()
