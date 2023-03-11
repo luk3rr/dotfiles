@@ -30,15 +30,16 @@ Depends on: hashlib, PyExifTool
 # --------------------------------------------------------------------------------------------------
 
 from hashlib import md5
-from os.path import exists
+from os.path import exists, splitext
+from os import rename
 from glob import glob
 from os import rename, path
 from time import time
-from exiftool import ExifToolHelper
+import exiftool
 from exiftool.exceptions import ExifToolExecuteError, ExifToolOutputEmptyError
 
 def get_file_data(path):
-    with ExifToolHelper() as at:
+    with exiftool.ExifToolHelper() as at:
         item = at.get_tags(path, tags=["Directory", "FileModifyDate"])
         source = item[0]["SourceFile"]
         date = item[0]["File:FileModifyDate"]
@@ -72,12 +73,18 @@ def main():
         except IsADirectoryError:
             continue
 
-        fileExtension = currentItem.rsplit('.')[-1]
-        newName = path.dirname(meta[1]) + "/" + meta[0] + "-" + hashed[:15] + "." + fileExtension
+        fileExtension = splitext(currentItem)[1]
+        if not fileExtension:
+            print(">> File without extension")
+            print("\tITEM:     ", currentItem)
+            print("\tSKIP ITEM...", end="\n\n")
+            continue
+
+        newName = path.dirname(meta[1]) + "/" + meta[0] + "-" + hashed[:15] + fileExtension
 
         # check collision
         if exists(newName):
-            duplicateFile = path.dirname(meta[1]) + "/" + meta[0] + "-" + hashed[:15] + "-COLLISION=" + str(countCollisionItems) + "." + fileExtension
+            duplicateFile = path.dirname(meta[1]) + "/" + meta[0] + "-" + hashed[:15] + "-COLLISION=" + str(countCollisionItems) + fileExtension
             rename(currentItem, duplicateFile)
             countCollisionItems += 1
 
