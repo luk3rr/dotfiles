@@ -299,12 +299,19 @@
 ;; Set default dic
 (setq-default flyspell-default-dictionary "pt_BR")
 
+;; Function to open pdf associated with current org file
+(defun run-script-to-open-pdf ()
+  "Runs a Python script to open pdf"
+   (interactive)
+     (call-process-shell-command (format "python3 ~/.config/scripts/open_pdf_emacs.py \"%s\"" buffer-file-name)))
+
 ;; Keybind to export
 (map! :map (pdf-view-mode)
       :leader
       (:prefix-map ("e" . "export")
        :desc "Export to pdf"                    "p" #'org-latex-export-to-pdf
        :desc "Open export dispath"              "o" #'org-export-dispatch
+       :desc "Run associated pdf"               "r" #'run-script-to-open-pdf
        ))
 
 ;; Notes keybinds
