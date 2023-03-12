@@ -231,10 +231,10 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
 # Define Wallpaper
-exec --no-startup-id ~/.config/scripts/random_wallpaper.py --select_wallpaper 1920x1080
+exec --no-startup-id ~/.config/scripts/random_wallpaper.py change_wallpaper -s 1920x1080 -t 0.05
 
 # Change Wallpaper
-bindsym $mod+Shift+slash exec ~/.config/scripts/random_wallpaper.py --select_wallpaper 1920x1080
+bindsym $mod+Shift+slash exec ~/.config/scripts/random_wallpaper.py change_wallpaper -s 1920x1080 -t 0.05
 # or
 bindsym $mod+slash exec nitrogen
 
