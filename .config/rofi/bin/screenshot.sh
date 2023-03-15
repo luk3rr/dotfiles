@@ -28,29 +28,28 @@ window=""
 
 # Variable passed to rofi
 options="$screen\n$area\n$window"
+date=$(date +%Y-%m-%d-%kh%Mm%Ss)
 
 chosen="$(echo -e "$options" | $rofi_command -p 'maim' -dmenu -selected-row 1)"
 case $chosen in
     $screen)
 		if [[ -f /usr/bin/maim ]]; then
-			sleep 1; maim ~/Pictures/Screenshot_$(date +%Y-%m-%d_%kh%Mm%Ss).png | xclip -selection clipboard -t image/png
-            #sleep 1; scrot 'Screenshot_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; viewnior $$(xdg-user-dir PICTURES)/$f'
+			sleep 1; 
+            maim ~/Pictures/screenshot_$date.png | xclip -selection clipboard -t image/png
 		else
 			msg
 		fi
         ;;
     $area)
 		if [[ -f /usr/bin/maim ]]; then
-            maim --select | tee ~/Pictures/Screenshot_$(date +%Y-%m-%d_%kh%Mm%Ss).png | xclip -selection clipboard -t image/png
-			#scrot -s 'Screenshot_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; viewnior $$(xdg-user-dir PICTURES)/$f'
+            maim --select | tee ~/Pictures/screenshot_$date.png | xclip -selection clipboard -t image/png
 		else
 			msg
 		fi
         ;;
     $window)
 		if [[ -f /usr/bin/maim ]]; then
-		    maim -i $(xdotool getactivewindow) | tee ~/Pictures/Screenshot_$(date +%Y-%m-%d_%kh%Mm%Ss).png | xclip -selection clipboard -t image/png
-            #sleep 1; scrot -u 'Screenshot_%Y-%m-%d-%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES) ; viewnior $$(xdg-user-dir PICTURES)/$f'
+		    maim -i $(xdotool getactivewindow) | tee ~/Pictures/screenshot_$date.png | xclip -selection clipboard -t image/png
 		else
 			msg
 		fi

@@ -19,17 +19,42 @@
 #
 # -----------------------------------------------------------------------------------------------------------------------
 
+source "$HOME"/.config/rofi/configs/shared/theme.bash
+theme="$type/$style"
+
 get_sinks() {
     availableSinks=$(pacmd list-sinks | grep -e 'name:' | cut -d ' ' -f 2 | sed 's/<//g' | sed 's/>//g')
-    sinksNames=$(pacmd list-sinks | grep -e 'bluez.alias' -e 'alsa.card_name' | cut -d '=' -f 2 | sed 's/"//g')
     lineNum=$(echo "$availableSinks" | wc -l)
+    sinksDescription="$(pacmd list-sinks | grep -e 'device.description' | cut -d '=' -f 2 | sed 's/"//g')"
+    sinksNames="$(pacmd list-sinks | grep -e 'bluez.alias' -e 'alsa.name' | cut -d '=' -f 2 | sed 's/"//g')"
+
+    sinksCardNamesFormatted=""
+    while read -r line; do
+        line_cut=$(echo "$line" | cut -c 1-50)
+        line_formatted=$(printf "%-50s" "$line_cut")
+        sinksCardNamesFormatted="$sinksCardNamesFormatted$line_formatted\n"
+    done <<< "$sinksDescription"
+
+    finalOutput=$(paste -d '' <(echo -e "$sinksCardNamesFormatted") <(echo -e "$sinksNames"))
+}
+
+rofi_cmd() {
+    # -format 'i' to return index
+	rofi -theme-str 'window {height: 290; width: 700;}' \
+		-theme-str 'textbox-prompt-colon {str: "";}' \
+        -theme-str 'entry {placeholder: "Device...";}' \
+		-dmenu -i \
+        -format 'i' \
+		-p $prompt \
+        -lines "$lineNum" \
+		-theme ${theme}
 }
 
 menu() {
     get_sinks
 
-    #-format 'i' to return index
-    chosen=$(echo -e "$sinksNames" | rofi -dmenu -format 'i' -p "SINK" -lines "$lineNum")
+    prompt="SINK"
+    chosen=$(echo "$finalOutput" | rofi_cmd)
 
     if [[ "$chosen" == "" ]]; then
         return 0

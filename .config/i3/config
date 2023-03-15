@@ -45,15 +45,15 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Rofi keybinds
-bindcode 133 --release exec ~/.config/rofi/launchers/colorful/launcher.sh
+bindcode 133 --release exec ~/.config/rofi/launchers/great/launcher.sh
 
-bindsym $mod+s exec --no-startup-id ~/.config/rofi/bin/audio.sh
+bindsym $mod+m exec --no-startup-id ~/.config/rofi/bin/monitor_manager.sh
 
 bindsym $mod+n exec --no-startup-id ~/.config/rofi/bin/network.sh
 
-bindsym $mod+p exec --no-startup-id ~/.config/rofi/bin/powermenu.sh
+bindsym $mod+p exec --no-startup-id ~/.config/rofi/bin/powermenu/powermenu.sh
 
-bindsym $mod+m exec --no-startup-id ~/.config/rofi/bin/monitor_manager.sh
+bindsym $mod+s exec --no-startup-id ~/.config/rofi/bin/player.sh
 
 bindsym $mod+Print exec ~/.config/rofi/bin/screenshot.sh
 

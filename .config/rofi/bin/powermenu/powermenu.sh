@@ -11,10 +11,9 @@
 
 # styles: circle, rounded or square
 style="square"
-
-dir="$HOME/.config/rofi/configs/$style"
-
-rofi_command="rofi -theme $dir/powermenu.rasi"
+dir="$HOME/.config/rofi/bin/powermenu"
+theme='style-1'
+rofi_command="rofi -theme $HOME/.config/rofi/configs/square/powermenu.rasi"
 
 batteryTime=$(upower -i /org/freedesktop/UPower/devices/DisplayDevice | grep "time to" | sed 's/ //g;s/timeto.*://g;s/minutes/ min/g;s/hours/ h/g')
 batteryState=$(upower -i /org/freedesktop/UPower/devices/DisplayDevice | grep "state" | sed 's/ //g' | cut -d ':' -f 2)
@@ -36,19 +35,34 @@ reboot=""
 lock=""
 suspend=""
 logout=""
+yes='﫠 Yes'
+no=' No'
 
-# Confirmation
-confirm_exit() {
-	rofi -dmenu\
-		-i\
-		-no-fixed-num-lines\
-		-p "Are You Sure? : "\
-		-theme $HOME/.config/rofi/configs/styles/confirm.rasi
+
+# Rofi CMD
+rofi_cmd() {
+	rofi -dmenu \
+		-p "$host" \
+		-mesg "Uptime: $uptime" \
+		-theme ${dir}/${theme}.rasi
 }
 
-# Message
-msg() {
-	rofi -theme "$HOME/.config/rofi/configs/styles/message.rasi" -e "Available Options  -  yes / y / no / n"
+# Confirmation CMD
+confirm_cmd() {
+	rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 250px;}' \
+		-theme-str 'mainbox {children: [ "message", "listview" ];}' \
+		-theme-str 'listview {columns: 2; lines: 1;}' \
+		-theme-str 'element-text {horizontal-align: 0.5;}' \
+		-theme-str 'textbox {horizontal-align: 0.5;}' \
+		-dmenu \
+		-p 'Confirmation' \
+		-mesg 'Are you Sure?' \
+		-theme ${dir}/${theme}.rasi
+}
+
+# Ask for confirmation
+confirm_exit() {
+	echo -e "$yes\n$no" | confirm_cmd
 }
 
 # Variable passed to rofi
@@ -58,46 +72,40 @@ chosen="$(echo -e "$options" | $rofi_command -p "$batteryTime $batteryState"  -d
 case $chosen in
     $shutdown)
 		ans=$(confirm_exit &)
-		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
+		if [[ $ans == $yes ]]; then
 			systemctl poweroff
-		elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
+		elif [[ $ans == $no ]]; then
 			exit 0
-        else
-			msg
         fi
         ;;
     $reboot)
 		ans=$(confirm_exit &)
-		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
+		if [[ $ans == $yes ]]; then
 			systemctl reboot
-		elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
+		elif [[ $ans == $no ]]; then
 			exit 0
-        else
-			msg
         fi
         ;;
     $lock)
 		if [[ -f /usr/bin/i3lock ]]; then
-			betterlockscreen -l dim && betterlockscreen -u ~/data/000.*/005.*
+			betterlockscreen -l dim && betterlockscreen -u ~/data/000.*/005.*/ALL_FHD/FAVORITES_FHD/
 		elif [[ -f /usr/bin/betterlockscreen ]]; then
 			i3lock
 		fi
         ;;
     $suspend)
 		ans=$(confirm_exit &)
-		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
+		if [[ $ans == $yes ]]; then
 			playerctl pause
 			amixer set Master mute
 			systemctl suspend
-		elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
+		elif [[ $ans == $no ]]; then
 			exit 0
-        else
-			msg
         fi
         ;;
     $logout)
 		ans=$(confirm_exit &)
-		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
+		if [[ $ans == $yes ]]; then
 			if [[ "$DESKTOP_SESSION" == "Openbox" ]]; then
 				openbox --exit
 			elif [[ "$DESKTOP_SESSION" == "bspwm" ]]; then
@@ -105,10 +113,8 @@ case $chosen in
 			elif [[ "$DESKTOP_SESSION" == "i3" ]]; then
 				i3-msg exit
 			fi
-		elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
+		elif [[ $ans == $no ]]; then
 			exit 0
-        else
-			msg
         fi
         ;;
 esac

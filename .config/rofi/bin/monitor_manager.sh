@@ -34,6 +34,6 @@ case $chosen in
         $HOME/.config/scripts/monitor_manager.sh --wide_off
         ;;
     $nightlight)
-        $HOME/.config/scripts/nightlight-rofi.sh
+        $HOME/.config/rofi/bin/nightlight-rofi.sh
         ;;
 esac

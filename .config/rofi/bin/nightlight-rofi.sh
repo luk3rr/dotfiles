@@ -8,6 +8,9 @@
 
 # ----------------------------------------------------------------------------------------------------------------------
 
+source "$HOME"/.config/rofi/configs/shared/theme.bash
+theme="$type/$style"
+
 # https://github.com/jonls/redshift/blob/master/README-colorramp
 # ["KELVIN_VALUE"="GAMMA_VALUE"]
 declare GAMMA_VALUES=(["2000"]="1.00000000:0.54360078:0.08679949"
@@ -74,15 +77,42 @@ availabre_gamma() {
     done
 }
 
+rofi_cmd() {
+	rofi -theme-str "window {height: 290;}" \
+		-theme-str "listview {columns: 1; lines: 10;}" \
+		-theme-str 'textbox-prompt-colon {str: "";}' \
+        -theme-str 'entry {placeholder: "Choose display...";}' \
+		-dmenu \
+		-p $prompt \
+		-markup-rows \
+        -lines "$lineNum" \
+		-theme ${theme}
+}
+
+rofi_temp() {
+	rofi -theme-str "window {height: 500;}" \
+		-theme-str "listview {columns: 1; lines: 10;}" \
+		-theme-str 'textbox-prompt-colon {str: "";}' \
+        -theme-str 'entry {placeholder: "Choose temperature...";}' \
+		-dmenu \
+		-p $prompt \
+		-markup-rows \
+        -lines "$lineNum" \
+		-theme ${theme}
+}
+
 menu() {
     get_display_name
-    display=$(echo -e "$displays" | uniq -u | rofi -dmenu -p "Display")
+
+    prompt="Display"
+    display=$(echo -e "$displays" | uniq -u | rofi_cmd)
     
     if [[ -n $display ]]; then
         get_display_gamma
         availabre_gamma
-
-        chosen=$(echo -e "Reset\n$options\n" | uniq -u | rofi -dmenu -p "Choose temp to $display")
+        
+        prompt="$display"
+        chosen=$(echo -e "Reset\n$options\n" | uniq -u | rofi_temp)
         
         chosen=$(cut -d "K" -f 1 <<< $chosen)
 

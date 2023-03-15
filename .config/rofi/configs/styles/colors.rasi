@@ -15,8 +15,8 @@
  *
  * // Other
  * adapta, adapta-nokto, arc, arc-dark, adwaita, gruvbox, dark
- * armchair, darkpink, fresh, inside, party, sirin
+ * armchair, darkpink, fresh, inside, party, sirin, onedark
  *
  */
 
-@import "dark.rasi"
+@import "onedark.rasi"

@@ -34,20 +34,13 @@ stop=""
 next=""
 previous=""
 audio_output=""
+# criar audio mute 
 
 # Variable passed to rofi
 options="$previous\n$play_pause\n$stop\n$next\n$audio_output"
 
 # Get the current playing song
-artist=$(playerctl metadata | grep :artist | tr -s "\t" " "  | cut -d " " -f 3-)
-title=$(playerctl metadata | grep :title | tr -s "\t" " "   | cut -d " " -f 3-)
-
-current="$artist - $title"
-
-n=`echo $current | wc -c`
-if [[ n -gt 60 ]]; then
-    current="${current:0:60} ..."
-fi
+current=$(~/.config/polybar/player.sh)
 
 # Spawn the mpd menu with the "Play / Pause" entry selected by default
 chosen="$(echo -e "$options" | $rofi_command -p "$current" -dmenu $active $urgent -selected-row 1)"
@@ -66,6 +59,6 @@ case $chosen in
         playerctl next
         ;;
     $audio_output)
-        $HOME/.config/scripts/audio-rofi.sh
+        $HOME/.config/rofi/bin/audio-rofi.sh
         ;;
 esac

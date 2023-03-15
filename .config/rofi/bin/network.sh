@@ -64,10 +64,10 @@ case $chosen in
 		fi 
         ;;
     $wifi)
-        $HOME/.config/scripts/wifi.sh
+        $HOME/.config/rofi/bin/wifi-rofi.sh
         ;;
     $bluetooth)
-        $HOME/.config/scripts/bluetooth.sh
+        $HOME/.config/rofi/bin/bluetooth-rofi.sh
         ;;
     $launch_cli)
         termite -e nmtui

@@ -20,6 +20,9 @@
 divider="---------"
 goback="Back"
 
+source "$HOME"/.config/rofi/configs/shared/theme.bash
+theme="$type/$style"
+
 # Checks if bluetooth controller is powered on
 power_on() {
     if bluetoothctl show | grep -q "Powered: yes"; then
@@ -213,6 +216,28 @@ print_status() {
     fi
 }
 
+rofi_cmd() {
+	rofi -theme-str "window {height: 390;}" \
+		-theme-str "listview {columns: 1; lines: 10;}" \
+		-theme-str 'textbox-prompt-colon {str: "";}' \
+        -theme-str 'entry {placeholder: "Device...";}' \
+		-dmenu -i \
+		-p $prompt \
+		-markup-rows \
+		-theme ${theme}
+}
+
+rofi_connect() {
+	rofi -theme-str "window {height: 390;}" \
+		-theme-str "listview {columns: 1; lines: 10;}" \
+		-theme-str 'textbox-prompt-colon {str: "";}' \
+        -theme-str 'entry {placeholder: "";}' \
+		-dmenu -i \
+		-p $prompt \
+		-markup-rows \
+		-theme ${theme}
+}
+
 # A submenu for a specific device that allows connecting, pairing, and trusting
 device_menu() {
     device=$1
@@ -232,7 +257,8 @@ device_menu() {
     options="$connected\n$paired\n$trusted\n$divider\n$goback\nExit"
 
     # Open rofi menu, read chosen option
-    chosen="$(echo -e "$options" | $rofi_command "$device_name")"
+    prompt="$device_name"
+    chosen="$(echo -e "$options" | rofi_connect)"
 
     # Match chosen option to command
     case $chosen in
@@ -277,7 +303,8 @@ show_menu() {
     fi
 
     # Open rofi menu, read chosen option
-    chosen="$(echo -e "$options" | $rofi_command "Bluetooth")"
+    prompt="Bluetooth"
+    chosen="$(echo -e "$options" | rofi_cmd)"
 
     # Match chosen option to command
     case $chosen in
@@ -304,8 +331,7 @@ show_menu() {
     esac
 }
 
-# Rofi command to pipe into, can add any options here
-rofi_command="rofi -dmenu $@ -p"
+
 
 case "$1" in
     --status)
