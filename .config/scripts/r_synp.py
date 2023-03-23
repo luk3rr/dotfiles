@@ -20,9 +20,9 @@
 # 
 # --------------------------------------------------------------------------------------------------
 
+import signal
 import subprocess
 from sys import exit
-from time import sleep
 from os import getenv
 from threading import Timer
 from watchdog.observers import Observer
@@ -82,8 +82,8 @@ class my_handler(FileSystemEventHandler):
         # Chama o método empty_event_buffer após 10 seg
         self.timer = Timer(10.0, self.empty_event_buffer)
         self.timer.start()
-    
-if __name__ == "__main__":
+
+def main():
     if (LOCAL_FOLDER == None or REMOTE_FOLDER == None):
         print(">> Environment variables do not exist")
         exit()
@@ -94,15 +94,20 @@ if __name__ == "__main__":
     observer = Observer()
 
     observer.schedule(event_handler, path=LOCAL_FOLDER, recursive=True)
-    print("Monitoring started")
+    print("> Monitoring started")
     observer.start()
 
-    try:
-        while(True):
-            sleep(1)
-           
-    except KeyboardInterrupt:
-        # Ctrl + C
-        print("Monitoring finished")
+    def stopSync(signal, frame):
+        print(">> RECEIVED SIGTERM")
         observer.stop()
         observer.join()
+        print("> Monitoring finished")
+        exit(0)
+
+    signal.signal(signal.SIGTERM, stopSync)
+    signal.signal(signal.SIGINT, stopSync)
+
+    observer.join()
+
+if __name__ == "__main__":
+    main()  
