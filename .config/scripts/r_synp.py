@@ -23,6 +23,7 @@
 import signal
 import subprocess
 from sys import exit
+import os.path
 from os import getenv
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
@@ -44,7 +45,16 @@ def pullRemote():
 # Classe responsável por lidar com os eventos de alterações na pasta local
 class myHandler(FileSystemEventHandler):
     def on_created(self, event):
+        # Ignora diretórios 
         if event.is_directory:
+            return None
+    
+        # Ignora arquivos temporários
+        if os.path.splitext(event.src_path)[1] == '.tmp':
+            return None
+
+        # Ignora arquivos que ainda estejam em download
+        if os.path.splitext(event.src_path)[1] == '.crdownload':
             return None
 
         # A partir do caminho do arquivo alterado, acha o caminho desse arquivo no diretório remoto
@@ -54,6 +64,7 @@ class myHandler(FileSystemEventHandler):
         cmd = ["rclone", "copyto", event.src_path, relativeRemotePath, "-vvv"]
         log = subprocess.run(cmd, stdout=subprocess.PIPE)
         print(log.stdout.decode())
+        print(">> WAITING...")
 
     def on_modified(self, event):
         # Criar ou modificar um arquivo merece o mesmo comportamento, então simplesmente chame on_created
@@ -67,6 +78,7 @@ class myHandler(FileSystemEventHandler):
         cmd = ["rclone", "delete", relativeRemotePath, "-vvv", "--rmdirs"]
         log = subprocess.run(cmd, stdout=subprocess.PIPE)
         print(log.stdout.decode())
+        print(">> WAITING...")
 
     def on_moved(self, event):
         # A partir do caminho do arquivo, acha o caminho desse arquivo no diretório remoto e para onde ele será movido
