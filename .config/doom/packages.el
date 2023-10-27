@@ -84,3 +84,11 @@
 ;;  :recipe (:host github :repo "jkitchin/org-ref"))
 
 (package! ivy-bibtex)
+
+(package! helm-bibtex)
+
+(package! openwith)
+
+(package! dap-mode)
+
+(package! org-fragtog)
