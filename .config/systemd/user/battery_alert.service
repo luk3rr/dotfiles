@@ -1,0 +1,10 @@
+# module to check if battery is low for every 15 min
+
+[Unit]
+Description=Battery alert timer
+
+[Service]
+ExecStart=/home/luk3rr/.config/rofi/bin/battery_alert.sh
+
+[Install]
+WantedBy=default.target

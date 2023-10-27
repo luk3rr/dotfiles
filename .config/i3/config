@@ -34,7 +34,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id xidlehook \
      --not-when-fullscreen \
      --not-when-audio \
-     --timer 300 "betterlockscreen -l dim && betterlockscreen -u ~/data/000.*/005.*" '' \
+     --timer 300 "betterlockscreen -l dim && betterlockscreen -u /home/luk3rr/data/000.IMAGENS/005.WALLPAPERS/ALL_FHD/FAVORITES_FHD/" '' \
      &
 
 # Use pactl to adjust volume in PulseAudio.
@@ -47,13 +47,15 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Rofi keybinds
 bindcode 133 --release exec ~/.config/rofi/launchers/great/launcher.sh
 
-bindsym $mod+m exec --no-startup-id ~/.config/rofi/bin/monitor_manager.sh
+bindsym $mod+s exec --no-startup-id ~/.config/rofi/bin/player.sh
 
 bindsym $mod+n exec --no-startup-id ~/.config/rofi/bin/network.sh
 
+bindsym $mod+o exec --no-startup-id ~/.config/rofi/bin/open_workspace.sh
+
 bindsym $mod+p exec --no-startup-id ~/.config/rofi/bin/powermenu/powermenu.sh
 
-bindsym $mod+s exec --no-startup-id ~/.config/rofi/bin/player.sh
+bindsym $mod+m exec --no-startup-id ~/.config/rofi/bin/monitor_manager.sh
 
 bindsym $mod+Print exec ~/.config/rofi/bin/screenshot.sh
 
@@ -218,6 +220,8 @@ exec_always setxkbmap -model thinkpad60 -layout br
 # Gaps
 for_window [class="^.*"] border pixel 3
 #for_window [title=".*Helm.*"] floating enable
+#for_window [class=Yad] floating enable
+for_window [class=brightness.py] floating enable
 gaps inner 5
 gaps outer 5
 
@@ -241,6 +245,9 @@ bindsym $mod+slash exec nitrogen
 # Polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
+# Conky
+exec --no-startup-id conky
+
 # Start applications on specific workspaces when i3 starts
 #assign [class="obsidian"] 1
 #assign [class="discord"] 5
@@ -248,7 +255,24 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 #for_window [class="Spotify"] move to workspace 4
 
 # use workspaces on different monitors
+workspace $ws1 output eDP1
+workspace $ws2 output eDP1
+workspace $ws3 output eDP1
+workspace $ws4 output eDP1
+workspace $ws5 output HDMI2
 workspace $ws6 output HDMI2
+workspace $ws7 output HDMI2
+workspace $ws8 output HDMI2
+workspace $ws9 output HDMI2
+workspace $ws10 output HDMI2
+
+# Start app on specific workspace
+#assign [class="qBittorrent"] 7
+assign [class="thunderbird"] 8
+assign [class="discord"] 9
+assign [class="Skype"] 9
+assign [class="TelegramDesktop"] 9
+assign [class="Spotify"] 10
 
 # useful if you copy pdf content and would like to paste into emacs without line breaks
 bindsym $mod+x exec ~/.config/scripts/noLineBreaks.sh

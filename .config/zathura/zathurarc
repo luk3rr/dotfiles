@@ -9,6 +9,8 @@ map R rotate
 
 set pages-per-row 1
 
+set sandbox none
+
 set font "FiraCode 14"
 
 # zathurarc-dark

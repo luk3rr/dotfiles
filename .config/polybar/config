@@ -79,7 +79,7 @@ cursor-scroll = ns-resize
 inherit = section/base
 modules-left = archicon i3 player
 modules-center = pomodoro date
-modules-right = pulseaudio filesystem xkeyboard memory cpu pacman pacman-update temperature bluetooth wlan eth battery
+modules-right = pulseaudio xkeyboard memory cpu pacman pacman-update temperature bluetooth wlan eth battery
 
 [bar/secondary]
 inherit = section/base
@@ -162,7 +162,6 @@ format-underline = ${colors.underline}
 [module/pulseaudio]
 type = internal/pulseaudio
 format-volume = <format-prefix> <label-volume> <bar-volume>
-format-prefix = "A"
 label-volume =    %percentage%%
 label-volume-foreground = ${colors.foreground-alt}
 format-prefix-foreground = ${colors.foreground-alt}
@@ -217,6 +216,7 @@ interval = 2
 format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
 label = %percentage_used%%
+#label = %gb_used%/%gb_total%
 format-underline = ${colors.underline}
 
 
@@ -253,7 +253,7 @@ format-underline = ${colors.underline}
 type = custom/script
 exec = pacman -Qu | wc -l
 exec-if = "[ $(pacman -Qu | wc -l) -gt 0 ]"
-interval = 7200
+interval = 20
 format =  <label>
 format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}

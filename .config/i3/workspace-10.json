@@ -1,0 +1,83 @@
+// vim:ts=4:sw=4:et
+{
+    // floating_con with 1 children
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "splith",
+    "marks": [],
+    "percent": null,
+    "rect": {
+       "height": 1025,
+       "width": 1328,
+       "x": 18,
+       "y": 44
+    },
+    "type": "floating_con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 3,
+            "floating": "user_on",
+            "geometry": {
+               "height": 600,
+               "width": 800,
+               "x": 0,
+               "y": 0
+            },
+            "marks": [],
+            "name": "Spotify",
+            "percent": 1,
+            "swallows": [
+               {
+                    "class": "^Spotify$",
+                    "instance": "^spotify$",
+                    "machine": "^marilene$",
+                    "title": "^Spotify$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
+{
+    // floating_con with 1 children
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "splith",
+    "marks": [],
+    "percent": null,
+    "rect": {
+       "height": 196,
+       "width": 561,
+       "x": 1352,
+       "y": 873
+    },
+    "type": "floating_con",
+    "nodes": [
+        {
+            "border": "pixel",
+            "current_border_width": 3,
+            "floating": "user_on",
+            "geometry": {
+               "height": 1029,
+               "width": 942,
+               "x": 0,
+               "y": 0
+            },
+            "marks": [],
+            "name": "cava",
+            "percent": 1,
+            "swallows": [
+               {
+                    "class": "^kitty$",
+                    "instance": "^kitty$",
+                    "machine": "^marilene$",
+                    "title": "^cava$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+

@@ -36,7 +36,7 @@ if (ping -c 1 archlinux.org || ping -c 1 google.com || ping -c 1 bitbucket.org |
         fi
 	active="-a 0"
 	SSID="﬉ $(iwgetid -r)"
-	PIP="$(wget --timeout=30 http://ipinfo.io/ip -qO -)"
+	PIP="$(wget --timeout=5 http://ipinfo.io/ip -qO -)"
 	fi
 else
     urgent="-u 0"

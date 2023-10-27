@@ -1,0 +1,11 @@
+# module to check if battery is low for every 15min
+
+[Unit]
+Description=Battery alert timer
+
+[Timer]
+OnBootSec=5s
+OnUnitActiveSec=5min
+
+[Install]
+WantedBy=timers.target

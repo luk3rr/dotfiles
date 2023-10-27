@@ -28,28 +28,28 @@ window=""
 
 # Variable passed to rofi
 options="$screen\n$area\n$window"
-date=$(date +%Y-%m-%d-%kh%Mm%Ss)
+date=$(date +%Y%m%d-%kh%Mm%Ss | sed 's/ /0/g')
 
 chosen="$(echo -e "$options" | $rofi_command -p 'maim' -dmenu -selected-row 1)"
 case $chosen in
     $screen)
 		if [[ -f /usr/bin/maim ]]; then
 			sleep 1; 
-            maim ~/Pictures/screenshot_$date.png | xclip -selection clipboard -t image/png
+            maim ~/Pictures/995.SCREENSHOTS/screenshot_$date.png | xclip -selection clipboard -t image/png
 		else
 			msg
 		fi
         ;;
     $area)
 		if [[ -f /usr/bin/maim ]]; then
-            maim --select | tee ~/Pictures/screenshot_$date.png | xclip -selection clipboard -t image/png
+            maim --select | tee ~/Pictures/995.SCREENSHOTS/screenshot_$date.png | xclip -selection clipboard -t image/png
 		else
 			msg
 		fi
         ;;
     $window)
 		if [[ -f /usr/bin/maim ]]; then
-		    maim -i $(xdotool getactivewindow) | tee ~/Pictures/screenshot_$date.png | xclip -selection clipboard -t image/png
+		    maim -i $(xdotool getactivewindow) | tee ~/Pictures/995.SCREENSHOTS/screenshot_$date.png | xclip -selection clipboard -t image/png
 		else
 			msg
 		fi

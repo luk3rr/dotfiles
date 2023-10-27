@@ -58,7 +58,7 @@ toggle_on() {
 }
 
 rofi_cmd() {
-	rofi -theme-str "window {width: 600;}" \
+	rofi -theme-str "window {width: 700;}" \
 		-theme-str "listview {columns: 1; lines: 10;}" \
 		-theme-str 'textbox-prompt-colon {str: "直 ";}' \
 		-dmenu -i \
