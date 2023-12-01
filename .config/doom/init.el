@@ -59,7 +59,7 @@
        (evil +everywhere); come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
-       ;;(format +onsave)  ; automated prettiness
+       (format);;+onsave)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
        multiple-cursors  ; editing in many places at once
@@ -67,7 +67,7 @@
        ;;parinfer          ; turn lisp into python, sort of
        rotate-text       ; cycle region at point between text candidates
        snippets          ; my elves. They type so I don't have to
-       ;;word-wrap         ; soft wrapping with language-aware indent
+       word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
        (dired +icons
@@ -100,7 +100,7 @@
        ;;gist              ; interacting with github gists
        (lookup +dictionary
                +docsets)              ; navigate your code and its documentation
-       lsp               ; M-x vscode
+       (lsp -eglot)               ; M-x vscode
        magit             ; a git porcelain for Emacs
        make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -112,7 +112,6 @@
        ;;tmux              ; an API for interacting with tmux
        ;;tree-sitter       ; syntax and parsing, sitting in a tree...
        ;;upload            ; map local to remote projects via ssh/ftp
-       lsp
        magit
 
        :os
@@ -172,10 +171,10 @@
        plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python +lsp-pyright)
-      ;;         +poetry
-      ;;         +py-import
-      ;;         +pip-requirements
-      ;;         +pyenv)            ; beautiful is better than ugly
+       ;;         +poetry
+       ;;         +py-import
+       ;;         +pip-requirements
+       ;;         +pyenv)            ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6

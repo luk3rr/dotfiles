@@ -21,9 +21,11 @@ wide_on_above=" "
 wide_on_right="  "
 wide_off=" "
 nightlight="望"
+hdmi_1="󰡁 1"
+hdmi_2="󰡁 2"
 
 # Options in menu
-options="$wide_on_right\n$wide_on_above\n$wide_off\n$nightlight"
+options="$wide_on_right\n$wide_on_above\n$wide_off\n$nightlight\n$hdmi_1\n$hdmi_2"
 
 # Spawn the monitor_manager menu
 chosen="$(echo -e "$options" | $rofi_command -p "Monitor Manager" -dmenu $active $urgent -selected-row 1)"
@@ -39,5 +41,12 @@ case $chosen in
         ;;
     $nightlight)
         $HOME/.config/rofi/bin/nightlight-rofi.sh
+        ;;
+    $hdmi_1)
+        $HOME/.config/scripts/monitor_manager.sh --switch_to_hdmi1
+        ;;
+
+    $hdmi_2)
+        $HOME/.config/scripts/monitor_manager.sh --switch_to_hdmi2
         ;;
 esac

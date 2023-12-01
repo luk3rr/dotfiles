@@ -25,7 +25,7 @@ window {
     transparency:                   "real";
     border-radius:                  0px;
     location:                       southeast;
-	width:							500px;
+	width:							700px;
     x-offset:                       -15px;
     y-offset:                       -45px;
 }
@@ -63,7 +63,7 @@ inputbar {
 }
 
 listview {
-    columns:						4;
+    columns:						6;
     lines:							1;
     spacing:                        12px;
     cycle:                          true;

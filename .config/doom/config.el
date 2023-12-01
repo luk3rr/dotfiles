@@ -1,4 +1,4 @@
-; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+                                        ; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; ---------------------------------------------------------------------------------------------------------------------
 ;; >> USER
@@ -40,6 +40,7 @@
 ;; column width
 (add-hook 'doom-first-buffer-hook
           #'global-display-fill-column-indicator-mode)
+
 (setq-default fill-column 87)
 
 ;; emojify
@@ -54,18 +55,18 @@
 ;;
 ;;(after! doom-themes
 ;;  (setq doom-neotree-enable-variable-pitch t))
-        ;;doom-themes-neotree-file-icons t
+;;doom-themes-neotree-file-icons t
 
 ;; Treemacs project follow mode
 (with-eval-after-load 'treemacs
-  ;;(treemacs-follow-mode)
+  (treemacs-follow-mode)
   (treemacs-project-follow-mode)
   (setq treemacs--project-follow-delay 0.1)
   (setq treemacs-file-follow-delay 0.1)
   (setq treemacs-project-follow-cleanup t)
   (setq treemacs-follow-after-init t)
   (setq treemacs-width 30)
-)
+  )
 ;; ivy in center screen
 ;;(after! ivy-posframe
 ;;  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
@@ -78,9 +79,9 @@
 
 ;; Deft uses same org folder
 (after! deft
-    (setq deft-directory "~/Org/")
-    (setq deft-recursive t)
-)
+  (setq deft-directory "~/Org/")
+  (setq deft-recursive t)
+  )
 
 ;; Spell-check and grammar (need to install hunspell... pt-br only AUR)
 (after! ispell
@@ -170,7 +171,7 @@
          "\begin{filecontents}{\jobname.bib}\n"
          "\end{filecontents}\n"
          "\nocite{}\n")
-  ))
+        ))
 
 (setq org-citation-numeric-mode t) ; Ativa a numeração de citações
 
@@ -219,52 +220,52 @@
                              (?C :foreground "#c678dd" :weight bold))))
 
 (after! org
-    (setq org-agenda-files '("~/Org/Agenda/"
-                             "~/Org/Roam/Class Notes/"
-                             "~/Org/Roam/School Planner/")
-          org-agenda-block-separator 8411)
+  (setq org-agenda-files '("~/Org/Agenda/"
+                           "~/Org/Roam/Class Notes/"
+                           "~/Org/Roam/School Planner/")
+        org-agenda-block-separator 8411)
 
-    (setq org-agenda-custom-commands
-          '(
-            ("b" "bdays"
-             ((agenda ""
-                     ((org-agenda-span 'year)
-                      (org-agenda-show-all-dates nil)
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":bdays:"))
-                      (org-agenda-prefix-format
-                       '((agenda . " %i %-12:c in %(my-org-diff-to-now (org-entry-get (point) \"SCHEDULED\"))d at %?-12t% s")))
-                      ))))
+  (setq org-agenda-custom-commands
+        '(
+          ("b" "bdays"
+           ((agenda ""
+                    ((org-agenda-span 'year)
+                     (org-agenda-show-all-dates nil)
+                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":bdays:"))
+                     (org-agenda-prefix-format
+                      '((agenda . " %i %-12:c in %(my-org-diff-to-now (org-entry-get (point) \"SCHEDULED\"))d at %?-12t% s")))
+                     ))))
 
-            ("m" "month"
-             ((agenda ""
-                     ((org-agenda-span 30)
-                      (org-agenda-overriding-header "My month")
-                      (org-agenda-start-on-weekday nil)
-                      (org-agenda-start-day "-3d")
-                      (org-agenda-show-all-dates nil)
-                      ))))
+          ("m" "month"
+           ((agenda ""
+                    ((org-agenda-span 30)
+                     (org-agenda-overriding-header "My month")
+                     (org-agenda-start-on-weekday nil)
+                     (org-agenda-start-day "-3d")
+                     (org-agenda-show-all-dates nil)
+                     ))))
 
-            ("y" "Year agenda"
-             ((agenda ""
-                      ((org-agenda-span 'year)
-                       (org-agenda-show-all-dates nil)
-                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp "+"
-                                                   'todo 'done))
-                      (org-agenda-prefix-format
-                       '((agenda . " %i %-12:c in %(my-org-diff-to-now (org-entry-get (point) \"SCHEDULED\"))d at %?-12t% s")))
-                       ))))
-
-            ("v" "A better agenda view"
-             ((tags "PRIORITY=\"B\""
-                    ((org-agenda-skip-function '(org-agenda-skip-entry-if 'notscheduled
-                                                 'regexp "+"
+          ("y" "Year agenda"
+           ((agenda ""
+                    ((org-agenda-span 'year)
+                     (org-agenda-show-all-dates nil)
+                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp "+"
                                                  'todo 'done))
-                     (org-agenda-overriding-header "Next tasks:")))
+                     (org-agenda-prefix-format
+                      '((agenda . " %i %-12:c in %(my-org-diff-to-now (org-entry-get (point) \"SCHEDULED\"))d at %?-12t% s")))
+                     ))))
 
-              (tags "@cycle"
-                    ((org-agenda-skip-function '(org-agenda-skip-entry-if 'notscheduled))
-                     (org-agenda-overriding-header "Repeated tasks:")))
-              (agenda "")))
+          ("v" "A better agenda view"
+           ((tags "PRIORITY=\"B\""
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'notscheduled
+                                               'regexp "+"
+                                               'todo 'done))
+                   (org-agenda-overriding-header "Next tasks:")))
+
+            (tags "@cycle"
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'notscheduled))
+                   (org-agenda-overriding-header "Repeated tasks:")))
+            (agenda "")))
           ))
 
   ;;org-roam
@@ -486,17 +487,17 @@
           )
         )
   (setq org-capture-templates '(("i" "inbox" entry
-                               (file+headline "~/Org/Agenda/inbox.org" "Tasks")
-                               "*** TODO %i%?")
-                              ("t" "toDo" plain
-                               (file+function "~/Org/Agenda/toDo.org" org-find-month-in-datetree)
-                               "*** TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t) t)")
-                              ("a" "agenda" plain
-                               (file+function "~/Org/Agenda/agenda-23.org" org-find-month-in-datetree)
-                               "*** TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t) t)")))
+                                 (file+headline "~/Org/Agenda/inbox.org" "Tasks")
+                                 "*** TODO %i%?")
+                                ("t" "toDo" plain
+                                 (file+function "~/Org/Agenda/toDo.org" org-find-month-in-datetree)
+                                 "*** TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t) t)")
+                                ("a" "agenda" plain
+                                 (file+function "~/Org/Agenda/agenda-23.org" org-find-month-in-datetree)
+                                 "*** TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t) t)")))
 
   (setq org-refile-targets '(("~/Org/Agenda/someday.org" :level . 1)
-                           ("~/Org/Agenda/toDo.org" :maxlevel . 2)))
+                             ("~/Org/Agenda/toDo.org" :maxlevel . 2)))
 
   (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
   (setq org-log-into-drawer "LOGBOOK")
@@ -505,22 +506,22 @@
   )
 
 (use-package! websocket
-    :after org-roam)
+  :after org-roam)
 
 (use-package! org-roam-ui
-   :hook (org-roam . org-roam-ui-mode))
+  :hook (org-roam . org-roam-ui-mode))
 
 (use-package! org-roam-ui
-    :after org-roam ;; or :after org
-    ;;                 normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-    ;;                 a hookable mode anymore, you're advised to pick something yourself
-    ;;                 if you don't care about startup time, use
-    :hook (after-init . org-roam-ui-mode)
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
+  :after org-roam ;; or :after org
+  ;;                 normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+  ;;                 a hookable mode anymore, you're advised to pick something yourself
+  ;;                 if you don't care about startup time, use
+  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
 
 (setq org-id-link-to-org-use-id t)
 
@@ -565,12 +566,12 @@
   (interactive)
   (goto-char (point-min))
   (unless (search-forward "#ifndef" nil t)
-      (let ((header-name (file-name-nondirectory (buffer-file-name))))
+    (let ((header-name (file-name-nondirectory (buffer-file-name))))
       (setq header-name (replace-regexp-in-string "\\." "_" header-name))
       (insert (concat
-                "#ifndef " (upcase header-name) "_\n"
-                "#define " (upcase header-name) "_\n\n\n"
-                "#endif // " (upcase header-name) "_\n"))))
+               "#ifndef " (upcase header-name) "_\n"
+               "#define " (upcase header-name) "_\n\n\n"
+               "#endif // " (upcase header-name) "_\n"))))
   )
 
 (defun my/insert-header-on-file-creation ()
@@ -661,8 +662,8 @@
                         (buffer-string)))
          (base-name (if (string-match "#\\+export_file_name:[[:space:]]*../Outputs/\\(.*\\)"
                                       org-content)
-                       (match-string 1 org-content)
-                     (file-name-base org-file)))
+                        (match-string 1 org-content)
+                      (file-name-base org-file)))
          (tex-file (concat "~/Org/Roam/Outputs/" base-name ".tex"))
          (bash-script "/home/luk3rr/.config/scripts/compile_tex.sh")) ; Update with the actual path
 
@@ -740,16 +741,16 @@
        ))
 
 (map! :leader
-       :desc "graph roam-ui"
-       "n r g" #'org-roam-ui-mode
-       )
+      :desc "graph roam-ui"
+      "n r g" #'org-roam-ui-mode
+      )
 
 (map! :leader
-       :desc "insert header"
-       "c h" #'my/insert-header
-       :desc "insert ifndef"
-       "c n" #'my/insert-ifndef
-       )
+      :desc "insert header"
+      "c h" #'my/insert-header
+      :desc "insert ifndef"
+      "c n" #'my/insert-ifndef
+      )
 
 (map! :leader
       (:prefix-map ("l" . "latex")
@@ -765,6 +766,10 @@
 (map! :leader
       :desc "Toggle neotree file viewer" "t n" #'treemacs
       :desc "Open directory in neotree" "d n" #'treemacs)
+
+(define-key evil-visual-state-map (kbd "C-;") 'evil-multiedit-match-all)
+(define-key evil-normal-state-map (kbd "C-;") 'evil-multiedit-match-all)
+
 
 ;; ---------------------------------------------------------------------------------------------------------------------
 ;; >> DEPENDS ON DIR
