@@ -18,7 +18,9 @@ ToggleWifi() {
     result=$(nmcli dev | grep "ethernet" | grep -w "unavailable")
 
     if [ -n "$result" ]; then
-        nmcli radio wifi on
+        # nmcli radio wifi on
+        true
+
     else
         nmcli radio wifi off
     fi

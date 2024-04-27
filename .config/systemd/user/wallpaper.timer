@@ -2,6 +2,7 @@
 
 [Unit]
 Description=Wallpaper timer
+Unit=wallpaper.service
 
 [Timer]
 OnBootSec=5s

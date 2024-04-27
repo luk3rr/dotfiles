@@ -13,6 +13,8 @@ set sandbox none
 
 set font "FiraCode 14"
 
+# set selection-clipboard clipboard
+
 # zathurarc-dark
 set notification-error-bg       "#282a36" # base01  # seem not work
 set notification-error-fg       "#ff5555" # red

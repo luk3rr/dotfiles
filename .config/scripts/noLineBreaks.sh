@@ -4,13 +4,13 @@
 # author: Glutanimate (github.com/glutanimate)
 # license: MIT license
 
-# Parses currently selected text and removes 
+# Parses currently selected text and removes
 # newlines that aren't preceded by a full stop
 
 SelectedText="$(xsel)"
 
-ModifiedText="$(echo "$SelectedText" | \
-    sed 's/\.$/.|/g' | sed 's/^\s*$/|/g' | tr '\n' ' ' | tr '|' '\n')"
+ModifiedText="$(echo "$SelectedText" |
+	sed 's/\.$/.|/g' | sed 's/^\s*$/|/g' | tr '\n' ' ' | tr '|' '\n')"
 
 #   - first sed command: replace end-of-line full stops with '|' delimiter and keep original periods.
 #   - second sed command: replace empty lines with same delimiter (e.g.

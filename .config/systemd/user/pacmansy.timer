@@ -3,6 +3,7 @@
 
 [Unit]
 Description=pacman sync timer
+Unit=pacmansy.service
 
 [Timer]
 OnBootSec=5s

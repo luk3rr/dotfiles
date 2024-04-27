@@ -4,7 +4,9 @@
 Description=Wallpaper timer
 
 [Service]
-Environment=WALLPAPERS_DIR=/home/luk3rr/WALLPAPER_DIR
+Environment=WALLPAPERS_DIR=/home/luk3rr/Wallpapers/
+Environment=PYTHONPATH=/home/luk3rr/.local/lib/python3.11/site-packages
+Environment=DISPLAY=:0
 ExecStart=/home/luk3rr/.config/scripts/random_wallpaper.py change_wallpaper -s 1920x1080 -t 0.05
 
 [Install]

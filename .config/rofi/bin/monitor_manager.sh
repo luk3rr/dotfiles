@@ -17,9 +17,9 @@ dir="$HOME/.config/rofi/configs/$style"
 rofi_command="rofi -theme $dir/monitor_manager.rasi"
 
 # Icons
-wide_on_above=" "
-wide_on_right="  "
-wide_off=" "
+wide_on_above="󰍺 "
+wide_on_right="󰍹 󰍹 "
+wide_off="󰍹 "
 nightlight="望"
 hdmi_1="󰡁 1"
 hdmi_2="󰡁 2"

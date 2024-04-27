@@ -376,8 +376,8 @@ function output() {
                 VOL_ICON="${ICONS_VOLUME[0]}"
             elif [ "$NODE_NICKNAME" == "Speaker" ]; then
                 VOL_ICON="${ICONS_VOLUME[1]}"
-            elif [ "$NODE_NICKNAME" == "Bluetooth" ]; then
-                VOL_ICON="" #"${ICONS_VOLUME[2]}"
+            elif [ "$NODE_NICKNAME" == "EDIFIER TWS1 Pro" ]; then
+                VOL_ICON="${ICONS_VOLUME[2]}"
             else
                 VOL_ICON=""
             fi
@@ -392,8 +392,8 @@ function output() {
                     VOL_ICON="${ICONS_MUTED[0]}"
                 elif [ "$NODE_NICKNAME" == "Speaker" ]; then
                     VOL_ICON="${ICONS_MUTED[1]}"
-                elif [ "$NODE_NICKNAME" == "Bluetooth" ]; then
-                    VOL_ICON="" #"${ICONS_VOLUME[2]}"
+                elif [ "$NODE_NICKNAME" == "EDIFIER TWS1 Pro" ]; then
+                    VOL_ICON="${ICONS_MUTED[2]}"
                 else
                     VOL_ICON=""
                 fi

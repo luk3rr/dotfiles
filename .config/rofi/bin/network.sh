@@ -36,12 +36,10 @@ if (ping -c 1 archlinux.org || ping -c 1 google.com || ping -c 1 bitbucket.org |
         fi
 	active="-a 0"
 	SSID="﬉ $(iwgetid -r)"
-	PIP="$(wget --timeout=5 http://ipinfo.io/ip -qO -)"
 	fi
 else
     urgent="-u 0"
     SSID="Disconnected"
-    PIP="Not Available"
     connected=""
 fi
 
@@ -54,7 +52,7 @@ bluetooth=""
 options="$connected\n$wifi\n$bluetooth\n$launch_cli\n$launch"
 
 ## Main
-chosen="$(echo -e "$options" | $rofi_command -p "$SSID : $PIP" -dmenu $active $urgent -selected-row 1)"
+chosen="$(echo -e "$options" | $rofi_command -p "$SSID" -dmenu $active $urgent -selected-row 1)"
 case $chosen in
     $connected)
 		if [[ $STATUS == *"enable"* ]]; then
@@ -64,13 +62,15 @@ case $chosen in
 		fi 
         ;;
     $wifi)
-        $HOME/.config/rofi/bin/wifi-rofi.sh
+        #$HOME/.config/rofi/bin/wifi-rofi.sh
+        terminator -e "nmtui"
         ;;
     $bluetooth)
-        $HOME/.config/rofi/bin/bluetooth-rofi.sh
+        #$HOME/.config/rofi/bin/bluetooth-rofi.sh
+        terminator -e "bluetuith"
         ;;
     $launch_cli)
-        termite -e nmtui
+        terminator -e "nmtui edit"
         ;;
     $launch)
         nm-connection-editor

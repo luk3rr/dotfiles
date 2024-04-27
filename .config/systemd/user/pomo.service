@@ -1,0 +1,12 @@
+# module to start the POMO
+
+[Unit]
+Description=Timer Pomodoro Service
+
+[Service]
+ExecStart=/usr/bin/python3 -m pomo
+Environment=PYTHONPATH=$PYTHONPATH:/home/luk3rr/Projects/POMO
+Restart=always
+
+[Install]
+WantedBy=default.target

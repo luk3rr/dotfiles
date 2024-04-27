@@ -88,7 +88,7 @@ case $chosen in
         ;;
     $lock)
 		if [[ -f /usr/bin/i3lock ]]; then
-			betterlockscreen -l dim && betterlockscreen -u ~/data/000.*/005.*/ALL_FHD/FAVORITES_FHD/
+			betterlockscreen -l dim && betterlockscreen -u ~/Wallpapers/FAVORITES_FHD/
 		elif [[ -f /usr/bin/betterlockscreen ]]; then
 			i3lock
 		fi

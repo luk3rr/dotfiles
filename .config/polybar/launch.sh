@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Terminate already running bar instances
+pkill -f "python3 -m i3-pomo"
 kill -9 $(pgrep polybar)
 #polybar-msg cmd quit
 

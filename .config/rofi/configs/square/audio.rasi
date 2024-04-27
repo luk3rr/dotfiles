@@ -42,7 +42,7 @@ prompt {
 
 textbox-prompt-colon {
 	expand: 						false;
-	str: 							"  ";
+	str: 							"  ";
 	background-color: 				@accent;
 	text-color: 					@background;
     padding:                        12px 10px 0px 10px;
